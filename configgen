@@ -1,0 +1,23 @@
+#!/bin/bash
+if [ $# -ne 2 ] 
+  then
+    echo "USAGE : <config_file_name> <source_properties_file>"
+        exit
+fi
+
+if [ ! -f "$2" ]; then
+    echo "$2 does not exist."
+    exit
+fi
+
+echo "apiVersion: v1"
+echo "kind: ConfigMap"
+echo "metadata:"
+echo ' name:' $1
+echo ' namespace: default'
+echo "data:"
+echo ' application.properties: |'
+cat $2 | while read line
+do
+        echo '  '$line
+done
